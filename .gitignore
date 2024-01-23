@@ -1,0 +1,5 @@
+# git ignore file to ignore node modules and other files
+
+/backend/node_modules
+
+/frontend/node_modules
