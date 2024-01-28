@@ -12,6 +12,7 @@ import {
     Input,
     useToast,
     Box,
+    Spinner
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useState } from "react";
@@ -165,20 +166,21 @@ const GroupChatModal = ({ children }) => {
                                 />
                             ))}
                         </Box>
-                        {loading ? (
-                            // <ChatLoading />
-                            <div>Loading...</div>
-                        ) : (
-                            searchResult
-                                ?.slice(0, 4)
-                                .map((user) => (
-                                    <UserListItem
-                                        key={user._id}
-                                        user={user}
-                                        handleFunction={() => handleGroup(user)}
-                                    />
-                                ))
-                        )}
+                        <Box display={'flex'} flexDir={'column'}>
+                            {loading ? (
+                                <Spinner size="md" mx={'auto'} mt={3} />
+                            ) : (
+                                searchResult
+                                    ?.slice(0, 4)
+                                    .map((user) => (
+                                        <UserListItem
+                                            key={user._id}
+                                            user={user}
+                                            handleFunction={() => handleGroup(user)}
+                                        />
+                                    ))
+                            )}
+                        </Box>
                     </ModalBody>
                     <ModalFooter>
                         <Button onClick={handleSubmit} colorScheme="blue">
