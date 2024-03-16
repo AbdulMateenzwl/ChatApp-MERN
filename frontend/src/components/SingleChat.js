@@ -38,7 +38,7 @@ export default function SingleChat({ fetchAgain, setFetchAgain }) {
 		},
 	};
 
-	const { user, selectedChat, setSelectedChat } = ChatState()
+	const { user, selectedChat, setSelectedChat,notification,setNotification } = ChatState()
 
 	useEffect(() => {
 		socket = io(ENDPOINT)
@@ -119,7 +119,10 @@ export default function SingleChat({ fetchAgain, setFetchAgain }) {
 	useEffect(() => {
 		socket.on("message recieved", (newMessageRecieved) => {
 			if (!selectedChatCompare || selectedChatCompare._id !== newMessageRecieved.chat._id) {
-				// give notification
+				if(!notification.includes(newMessageRecieved)){
+					setNotification([newMessageRecieved, ...notification])
+					setFetchAgain(!fetchAgain)
+				}
 			}
 			else {
 				setMessages([...messages, newMessageRecieved])
